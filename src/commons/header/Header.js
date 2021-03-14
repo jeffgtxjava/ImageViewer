@@ -1,11 +1,39 @@
-import React, { Component } from "react";
+import { Input, InputAdornment } from "@material-ui/core";
+import React, { Component, Fragment } from "react";
+import SearchIcon from "@material-ui/icons/Search";
 import "./Header.css";
 
 class Header extends Component {
   render() {
     return (
       <header className="app-header">
-        <span className="header-logo-text">Image Viewer</span>
+        {this.props.isLoggedIn !== true ? (
+          <div>
+            <span className="header-logo-text">Image Viewer</span>
+          </div>
+        ) : (
+          <div>
+            <span className="header-logo-text">Image Viewer</span>
+            <Fragment>
+              <div>
+                <header className="logo">Image Viewer</header>
+              </div>
+              <div className="header-right-flex-container">
+                <Input
+                  className="search-box"
+                  type="search"
+                  placeholder="Search..."
+                  disableUnderline
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  }
+                />
+              </div>
+            </Fragment>
+          </div>
+        )}
       </header>
     );
   }

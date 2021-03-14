@@ -84,6 +84,12 @@ export default class Login extends Component {
     }
   };
   render() {
+    if (this.state.loggedIn === true) {
+      return (
+        <Redirect to={{ pathname: "/home", state: { loginSuccess: true } }} />
+      );
+    }
+
     return (
       <div>
         <Header />

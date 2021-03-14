@@ -1,9 +1,14 @@
 .app-header{
-    background-color: #263238;
+    /* background-color: #263238;
     height: 50px;
     line-height: 50px;
     margin: 0px;
-    padding: 0px;
+    padding: 0px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #263238; 
+    height: 60px;
 }
 .header-logo-text{
     color: #fff;
@@ -13,3 +18,14 @@
     padding-left: 10px;
 
 }
+.header-right-flex-container{
+    display: flex;
+}
+
+.search-box {
+    border-radius: 4px; 
+    width: 300px; 
+    background: #c0c0c0; 
+    height: 40px;
+    margin: 10px 0px 10px 0px; 
+} 
