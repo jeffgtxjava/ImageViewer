@@ -77,8 +77,7 @@ export default class Login extends Component {
         "access-token",
         "IGQVJXeEhFZAlQ2Q3pOLU9ob0VURGtWbmYtRExUdC1QUzZAjT3ZAxN2UxZA3dFajR5dlQzVHBEanJEQjRJdTZAsczlyR3AxTzJrMEpsVS01NWJNeHJGX256R2xiZAFlGTmlYUFhtT1hIS0t3"
       );
-      this.setState({ loggedIn: true });
-      window.location.href = "/home";
+      this.setState({ loggedIn: true, incorrectUsernamePassword: "dispNone" });
     } else {
       this.setState({ incorrectUsernamePassword: "dispBlock" });
     }

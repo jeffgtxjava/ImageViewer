@@ -1,7 +1,7 @@
-import { Input, InputAdornment } from "@material-ui/core";
 import React, { Component, Fragment } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import "./Header.css";
+import { Avatar, IconButton, Input, InputAdornment } from "@material-ui/core";
 
 class Header extends Component {
   render() {
@@ -30,6 +30,12 @@ class Header extends Component {
                     </InputAdornment>
                   }
                 />
+                <IconButton>
+                  <Avatar
+                    alt="profile_picture"
+                    src={this.props.profilePictureUrl}
+                  />
+                </IconButton>
               </div>
             </Fragment>
           </div>
