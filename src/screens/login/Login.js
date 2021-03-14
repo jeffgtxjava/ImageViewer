@@ -19,7 +19,7 @@ const styles = {
     padding: "15px",
     position: "relative",
     top: "20px",
-    left: "50%",
+    left: "40%",
     width: "325px",
     transform: "translateX(-50%)",
   },

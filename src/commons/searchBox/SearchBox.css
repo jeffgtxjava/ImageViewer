@@ -1,0 +1,11 @@
+.header-right-flex-container{
+    display: flex;
+}
+
+.search-box {
+    border-radius: 4px; 
+    width: 300px; 
+    background: #c0c0c0; 
+    height: 40px;
+    margin: 10px 0px 10px 0px; 
+} 
