@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "../home/Home";
 import Login from "../../screens/login/Login";
+import Profile from "../profile/Profile";
 
 export default class Controller extends Component {
   constructor() {
@@ -23,6 +24,12 @@ export default class Controller extends Component {
           exact
           path="/home"
           render={(props) => <Home {...props} baseUrl={this.state.baseUrl} />}
+        />
+
+        <Route
+          exact
+          path="/profile"
+          render={(props) => <Profile {...props} />}
         />
       </Router>
     );

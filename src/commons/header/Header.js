@@ -2,9 +2,19 @@ import React, { Component } from "react";
 import "./Header.css";
 import SearchBox from "../searchBox/SearchBox";
 import ProfilePic from "../profilePic/ProfilePic";
+import { Redirect } from "react-router";
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedOut: false,
+    };
+  }
   render() {
+    if (this.state.loggedOut === true) {
+      return <Redirect to="/" />;
+    }
     return (
       <header className="app-header">
         {this.props.isLoggedIn !== true ? (
@@ -17,7 +27,7 @@ class Header extends Component {
               <span className="header-logo-text">Image Viewer</span>
             </div>
             <div style={{ float: "right", display: "inline" }}>
-              <SearchBox allPosts={this.props.allPosts} />
+              <SearchBox {...this.props} />
               <ProfilePic {...this.props} />
             </div>
           </>

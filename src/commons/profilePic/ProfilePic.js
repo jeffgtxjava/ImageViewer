@@ -15,7 +15,7 @@ export default class ProfilePic extends Component {
     this.state = {
       menuState: false,
       anchorEl: null,
-      profile_picture: "",
+      loggedOut: this.props.loggedOut,
     };
   }
 
@@ -30,10 +30,15 @@ export default class ProfilePic extends Component {
     this.setState({ menuState: !this.state.menuState, anchorEl: null });
   };
 
+  onLogout = () => {
+    this.setState({ loggedOut: true });
+    console.log(this.props);
+    console.log(this.state);
+  };
+
   render() {
     return (
       <>
-        {console.log(this.props)}
         <IconButton id="profile-icon" onClick={this.onProfileIconClick}>
           <Avatar
             alt="profile_picture"
@@ -53,7 +58,7 @@ export default class ProfilePic extends Component {
               <Typography>My Account</Typography>
             </MenuItem>
             <hr className="horizontal-line" />
-            <MenuItem>
+            <MenuItem onClick={this.onLogout}>
               <Typography>Logout</Typography>
             </MenuItem>
           </Menu>

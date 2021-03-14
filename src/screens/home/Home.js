@@ -40,6 +40,7 @@ export default class Home extends Component {
               {...this.props}
               isLoggedIn={true}
               allPosts={this.state.allPosts}
+              showSearchBox={true}
             />
           </div>
           {/* <div className="posts-card-container">
