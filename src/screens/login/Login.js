@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import Header from "../../commons/header/Header";
 
 export default class Login extends Component {
   render() {
     return (
       <div>
-        <h2>Image Viewer</h2>
+        <Header />
       </div>
     );
   }
