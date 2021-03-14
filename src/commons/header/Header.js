@@ -1,36 +1,9 @@
-import React, { Component, Fragment } from "react";
-import SearchIcon from "@material-ui/icons/Search";
+import React, { Component } from "react";
 import "./Header.css";
-import {
-  Avatar,
-  IconButton,
-  Input,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@material-ui/core";
 import SearchBox from "../searchBox/SearchBox";
+import ProfilePic from "../profilePic/ProfilePic";
 
 class Header extends Component {
-  constructor() {
-    super();
-    this.state = {
-      menuState: false,
-      anchorEl: null,
-    };
-  }
-
-  onProfileIconClick = (e) => {
-    this.setState({
-      menuState: !this.state.menuState,
-      anchorEl: e.currentTarget,
-    });
-  };
-
-  onMenuClose = () => {
-    this.setState({ menuState: !this.state.menuState, anchorEl: null });
-  };
   render() {
     return (
       <header className="app-header">
@@ -45,6 +18,7 @@ class Header extends Component {
             </div>
             <div style={{ float: "right", display: "inline" }}>
               <SearchBox />
+              <ProfilePic />
             </div>
           </>
         )}

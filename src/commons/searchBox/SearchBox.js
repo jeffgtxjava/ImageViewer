@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SearchIcon from "@material-ui/icons";
+import SearchIcon from "@material-ui/icons/Search";
 import { Input, InputAdornment } from "@material-ui/core";
 import "./SearchBox.css";
 
@@ -14,8 +14,7 @@ export default class SearchBox extends Component {
           disableUnderline
           startAdornment={
             <InputAdornment position="start">
-              {/* <SearchIcon /> */}
-              <span>He</span>
+              <SearchIcon />
             </InputAdornment>
           }
         />

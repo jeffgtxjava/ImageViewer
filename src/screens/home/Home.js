@@ -116,7 +116,9 @@ export default class Home extends Component {
     //   "users/self/?access_token=" +
     //   sessionStorage.getItem("access-token");
 
-    let url = `https://graph.instagram.com/${imageId}?fields=id,media_type,media_url,username,timestamp&access_token=${sessionStorage.getItem(
+    let url = `${
+      that.props.baseUrl
+    }${imageId}?fields=id,media_type,media_url,username,timestamp&access_token=${sessionStorage.getItem(
       "access-token"
     )}`;
 
@@ -136,14 +138,15 @@ export default class Home extends Component {
       if (this.readyState === 4) {
         that.setState({ recent_media: JSON.parse(this.responseText).data });
       }
-      console.log(this.responseText);
     });
 
     // let url =
     //   this.baseUrl +
     //   "users/self/media/recent/?access_token=" +
     //   sessionStorage.getItem("access-token");
-    let url = `https://graph.instagram.com/me/media?fields=id,caption&access_token=${sessionStorage.getItem(
+    let url = `${
+      that.props.baseUrl
+    }me/media?fields=id,caption&access_token=${sessionStorage.getItem(
       "access-token"
     )}`;
 

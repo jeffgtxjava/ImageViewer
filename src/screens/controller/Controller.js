@@ -24,17 +24,6 @@ export default class Controller extends Component {
           path="/home"
           render={(props) => <Home {...props} baseUrl={this.state.baseUrl} />}
         />
-
-        {/* <Route
-          exact
-          path="/"
-          render={(props) => <Login {...props} baseUrl={this.baseUrl} />}
-        />
-        <Route
-          path="/?access_token=ACCESS-TOKEN"
-          render={(props) => <Home {...props} baseUrl={this.baseUrl} />}
-        />
-        <Route path /> */}
       </Router>
     );
   }

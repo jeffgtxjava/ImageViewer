@@ -1,5 +1,6 @@
 .header-right-flex-container{
-    display: flex;
+    display: inline;
+    padding: 0px 10px;
 }
 
 .search-box {
