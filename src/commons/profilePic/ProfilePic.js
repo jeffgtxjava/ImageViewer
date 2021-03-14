@@ -7,6 +7,7 @@ import {
   MenuItem,
   Typography,
 } from "@material-ui/core";
+import profile_pic from "../../assets/images/profile_pic.png";
 
 export default class ProfilePic extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class ProfilePic extends Component {
     this.state = {
       menuState: false,
       anchorEl: null,
+      profile_picture: "",
     };
   }
 
@@ -31,8 +33,12 @@ export default class ProfilePic extends Component {
   render() {
     return (
       <>
+        {console.log(this.props)}
         <IconButton id="profile-icon" onClick={this.onProfileIconClick}>
-          <Avatar alt="profile_picture" src={this.props.profilePictureUrl} />
+          <Avatar
+            alt="profile_picture"
+            src={this.props.isLoggedIn ? profile_pic : null}
+          />
         </IconButton>
         <div>
           <Menu

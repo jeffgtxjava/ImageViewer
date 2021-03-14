@@ -20,7 +20,7 @@ export default class Home extends Component {
     this.baseUrl = "https://api.instagram.com/v1/";
     this.state = {
       profile_picture: "",
-      recent_media: null,
+      allPosts: null,
     };
   }
 
@@ -36,11 +36,15 @@ export default class Home extends Component {
       return (
         <div>
           <div>
-            <Header isLoggedIn={true} />
+            <Header
+              {...this.props}
+              isLoggedIn={true}
+              allPosts={this.state.allPosts}
+            />
           </div>
           {/* <div className="posts-card-container">
             {console.log("------------------")}
-            {(this.state.recent_media || []).map((details, index) => (
+            {(this.state.allPosts || []).map((details, index) => (
               <Card key={details.id} className="post-card">
                 {console.log(details)}
                 <CardHeader
@@ -111,11 +115,6 @@ export default class Home extends Component {
       }
     });
 
-    // let url =
-    //   this.baseUrl +
-    //   "users/self/?access_token=" +
-    //   sessionStorage.getItem("access-token");
-
     let url = `${
       that.props.baseUrl
     }${imageId}?fields=id,media_type,media_url,username,timestamp&access_token=${sessionStorage.getItem(
@@ -136,14 +135,10 @@ export default class Home extends Component {
 
     xhr.addEventListener("readystatechange", function() {
       if (this.readyState === 4) {
-        that.setState({ recent_media: JSON.parse(this.responseText).data });
+        that.setState({ allPosts: JSON.parse(this.responseText).data });
       }
     });
 
-    // let url =
-    //   this.baseUrl +
-    //   "users/self/media/recent/?access_token=" +
-    //   sessionStorage.getItem("access-token");
     let url = `${
       that.props.baseUrl
     }me/media?fields=id,caption&access_token=${sessionStorage.getItem(

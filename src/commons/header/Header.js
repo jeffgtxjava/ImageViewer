@@ -17,8 +17,8 @@ class Header extends Component {
               <span className="header-logo-text">Image Viewer</span>
             </div>
             <div style={{ float: "right", display: "inline" }}>
-              <SearchBox />
-              <ProfilePic />
+              <SearchBox allPosts={this.props.allPosts} />
+              <ProfilePic {...this.props} />
             </div>
           </>
         )}
