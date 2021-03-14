@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import Header from "../../commons/header/Header";
 import "./Login.css";
 import {
@@ -11,6 +12,8 @@ import {
   InputLabel,
   Typography,
 } from "@material-ui/core";
+import Home from "../home/Home";
+import { Redirect } from "react-router";
 const styles = {
   card: {
     padding: "15px",
@@ -26,8 +29,8 @@ const styles = {
 };
 
 export default class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
@@ -75,6 +78,7 @@ export default class Login extends Component {
         "IGQVJXeEhFZAlQ2Q3pOLU9ob0VURGtWbmYtRExUdC1QUzZAjT3ZAxN2UxZA3dFajR5dlQzVHBEanJEQjRJdTZAsczlyR3AxTzJrMEpsVS01NWJNeHJGX256R2xiZAFlGTmlYUFhtT1hIS0t3"
       );
       this.setState({ loggedIn: true });
+      window.location.href = "/home";
     } else {
       this.setState({ incorrectUsernamePassword: "dispBlock" });
     }
