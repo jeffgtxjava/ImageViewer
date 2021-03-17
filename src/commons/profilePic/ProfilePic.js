@@ -31,9 +31,9 @@ export default class ProfilePic extends Component {
   };
 
   onLogout = () => {
-    this.setState({ loggedOut: true });
-    console.log(this.props);
-    console.log(this.state);
+    this.props.onIsLoggedInChanged(false);
+    sessionStorage.clear();
+    this.props.history.replace("/");
   };
 
   render() {

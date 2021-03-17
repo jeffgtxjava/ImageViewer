@@ -9,14 +9,21 @@ export default class Home extends Component {
     super();
     this.baseUrl = "https://api.instagram.com/v1/";
     this.state = {
-      profile_picture: "",
       allPosts: null,
     };
   }
 
   componentDidMount() {
-    this.fetchAllPosts();
+    if (this.props.location.state !== undefined) {
+      this.fetchAllPosts();
+    }
   }
+
+  onLoginChange = (newStatus) => {
+    this.setState({ isLoggedIn: newStatus }, () => {
+      console.log("This is from Home class" + this.state);
+    });
+  };
 
   render() {
     if (this.props.location.state === undefined) {
@@ -26,11 +33,13 @@ export default class Home extends Component {
       return (
         <div>
           <div>
+            {console.log("-----" + JSON.stringify(this.props.location.state))}
             <Header
-              {...this.props}
-              isLoggedIn={true}
+              isLoggedIn={this.props.location.state.loginSuccess}
               allPosts={this.state.allPosts}
               showSearchBox={true}
+              onIsLoggedInChanged={this.onLoginChange}
+              {...this.props}
             />
           </div>
           <div>
@@ -75,12 +84,6 @@ export default class Home extends Component {
 
     let that = this;
 
-    xhr.addEventListener("readystatechange", function() {
-      if (this.readyState === 4) {
-        that.setState({ allPosts: JSON.parse(this.responseText).data });
-      }
-    });
-
     let url = `${
       that.props.baseUrl
     }me/media?fields=id,caption&access_token=${sessionStorage.getItem(
@@ -90,5 +93,11 @@ export default class Home extends Component {
     xhr.open("GET", url);
 
     xhr.send(data);
+
+    xhr.addEventListener("readystatechange", async function() {
+      if (this.readyState === 4) {
+        that.setState({ allPosts: JSON.parse(this.responseText).data });
+      }
+    });
   };
 }

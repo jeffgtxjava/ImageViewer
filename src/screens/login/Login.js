@@ -12,7 +12,6 @@ import {
   InputLabel,
   Typography,
 } from "@material-ui/core";
-import Home from "../home/Home";
 import { Redirect } from "react-router";
 const styles = {
   card: {

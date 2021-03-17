@@ -13,32 +13,38 @@ export default class SearchBox extends Component {
   }
 
   onSearch = (e) => {
-    console.log("started search");
-    this.setState({
-      searchText: e.target.value,
+    // console.log("started search");
+    // let key = e.target.value;
+    this.setState(function(state, props) {
+      return { searchText: e.target.value };
     });
     console.log(this.state.searchText);
 
-    if (this.state.searchText == null || this.state.searchText.trim() === "") {
-      this.setState({ filtered_post: this.props.allPosts });
-      console.log("-------", this.state.filtered_post);
-    } else {
-      let filteredRecentPosts = this.props.allPosts.filter((ele) => {
-        if (ele !== null) return ele.caption.includes(this.state.searchText);
-      });
-      this.setState({ filtered_post: filteredRecentPosts });
-      console.log("-------", filteredRecentPosts);
-    }
+    // if (this.state.searchText == null || this.state.searchText.trim() === "") {
+    //   this.setState({ filtered_post: this.props.allPosts });
+    // } else {
+    //   let filteredPosts =  this.props.
+    //   .filter((post) => {
+    //     if (post.caption === undefined) {
+    //       console.log(`${post.id}\t caption doesn't exist`);
+    //       return false;
+    //     }
+    //     return post.caption.includes(this.state.searchText);
+    //   });
+    //   this.setState({ filtered_post: filteredRecentPosts });
+    //   console.log("-------", filteredRecentPosts);
+    // }
     console.log("completed search");
   };
 
   componentDidMount() {
     this.setState({ filtered_post: this.props.allPosts });
-    console.log("From mount\n\n", this.state.filtered_post);
+    // console.log("From mount\n\n", this.state.filtered_post);
+    console.log(this.props);
   }
 
   render() {
-    console.log(this.props.allPosts);
+    // console.log(this.props.allPosts);
     return (
       <div className="header-right-flex-container">
         {this.props.showSearchBox ? (

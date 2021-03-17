@@ -9,8 +9,19 @@ export default class Controller extends Component {
     super();
     this.state = {
       baseUrl: "https://graph.instagram.com/",
+      isLoggedIn: false,
     };
   }
+
+  componentDidMount() {
+    console.log(`from Conrtoller \n ${JSON.stringify(this.props)}`);
+  }
+
+  onLoginChange = (newStatus) => {
+    this.setState({ isLoggedIn: newStatus }, () => {
+      console.log("This is from controller class" + this.state);
+    });
+  };
   render() {
     return (
       <Router>
@@ -23,13 +34,21 @@ export default class Controller extends Component {
         <Route
           exact
           path="/home"
-          render={(props) => <Home {...props} baseUrl={this.state.baseUrl} />}
+          render={(props) => (
+            <Home
+              {...props}
+              baseUrl={this.state.baseUrl}
+              onIsLoggedInChanged={this.onLoginChange}
+            />
+          )}
         />
 
         <Route
           exact
           path="/profile"
-          render={(props) => <Profile {...props} />}
+          render={(props) => (
+            <Profile {...props} baseUrl={this.state.baseUrl} />
+          )}
         />
       </Router>
     );
