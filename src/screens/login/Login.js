@@ -36,7 +36,6 @@ export default class Login extends Component {
       usernameRequired: "dispNone",
       passwordRequired: "dispNone",
       incorrectUsernamePassword: "dispNone",
-      loggedIn: sessionStorage.getItem("access-token") == null ? false : true,
     };
   }
 
@@ -76,13 +75,14 @@ export default class Login extends Component {
         "access-token",
         "IGQVJXeEhFZAlQ2Q3pOLU9ob0VURGtWbmYtRExUdC1QUzZAjT3ZAxN2UxZA3dFajR5dlQzVHBEanJEQjRJdTZAsczlyR3AxTzJrMEpsVS01NWJNeHJGX256R2xiZAFlGTmlYUFhtT1hIS0t3"
       );
-      this.setState({ loggedIn: true, incorrectUsernamePassword: "dispNone" });
+      this.setState({ incorrectUsernamePassword: "dispNone" });
+      this.props.onIsLoggedInChanged(true);
     } else {
       this.setState({ incorrectUsernamePassword: "dispBlock" });
     }
   };
   render() {
-    if (this.state.loggedIn === true) {
+    if (this.props.isLoggedIn === true) {
       return (
         <Redirect to={{ pathname: "/home", state: { loginSuccess: true } }} />
       );
@@ -90,7 +90,13 @@ export default class Login extends Component {
 
     return (
       <div>
-        <Header />
+        <Header
+          isLoggedIn={this.props.isLoggedIn}
+          allPosts={this.state.allPosts}
+          showSearchBox={true}
+          onIsLoggedInChanged={this.onLoginChange}
+          {...this.props}
+        />
         <Card style={styles.card}>
           <CardContent>
             <Typography style={styles.title}>LOGIN</Typography>

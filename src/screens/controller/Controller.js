@@ -13,14 +13,8 @@ export default class Controller extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(`from Conrtoller \n ${JSON.stringify(this.props)}`);
-  }
-
   onLoginChange = (newStatus) => {
-    this.setState({ isLoggedIn: newStatus }, () => {
-      console.log("This is from controller class" + this.state);
-    });
+    this.setState({ isLoggedIn: newStatus }, () => {});
   };
   render() {
     return (
@@ -28,7 +22,14 @@ export default class Controller extends Component {
         <Route
           exact
           path="/"
-          render={(props) => <Login {...props} baseUrl={this.state.baseUrl} />}
+          render={(props) => (
+            <Login
+              {...props}
+              baseUrl={this.state.baseUrl}
+              isLoggedIn={this.state.isLoggedIn}
+              onIsLoggedInChanged={this.onLoginChange}
+            />
+          )}
         />
 
         <Route
@@ -38,6 +39,7 @@ export default class Controller extends Component {
             <Home
               {...props}
               baseUrl={this.state.baseUrl}
+              isLoggedIn={this.state.isLoggedIn}
               onIsLoggedInChanged={this.onLoginChange}
             />
           )}
@@ -47,7 +49,12 @@ export default class Controller extends Component {
           exact
           path="/profile"
           render={(props) => (
-            <Profile {...props} baseUrl={this.state.baseUrl} />
+            <Profile
+              {...props}
+              baseUrl={this.state.baseUrl}
+              isLoggedIn={this.state.isLoggedIn}
+              onIsLoggedInChanged={this.onLoginChange}
+            />
           )}
         />
       </Router>

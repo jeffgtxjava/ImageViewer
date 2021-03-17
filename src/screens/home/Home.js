@@ -20,9 +20,7 @@ export default class Home extends Component {
   }
 
   onLoginChange = (newStatus) => {
-    this.setState({ isLoggedIn: newStatus }, () => {
-      console.log("This is from Home class" + this.state);
-    });
+    this.setState({ isLoggedIn: newStatus }, () => {});
   };
 
   render() {
@@ -33,7 +31,6 @@ export default class Home extends Component {
       return (
         <div>
           <div>
-            {console.log("-----" + JSON.stringify(this.props.location.state))}
             <Header
               isLoggedIn={this.props.location.state.loginSuccess}
               allPosts={this.state.allPosts}
@@ -62,7 +59,6 @@ export default class Home extends Component {
         // that.setState({
         //   profile_picture: JSON.parse(this.responseText).data.profile_picture,
         // });
-        console.log(this.responseText);
       }
     });
 

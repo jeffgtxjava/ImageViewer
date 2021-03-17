@@ -11,9 +11,17 @@ import {
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import "./Posts.css";
 import React, { Component } from "react";
+import { Redirect } from "react-router";
 
 export default class Posts extends Component {
   render() {
+    if (
+      sessionStorage.getItem("access-token") === undefined ||
+      this.props.isLoggedIn === false
+    ) {
+      return <Redirect to={{ pathname: "/" }} />;
+    }
+
     return (
       <>
         <div className="posts-card-container" style={{ marginTop: "10px" }}>
