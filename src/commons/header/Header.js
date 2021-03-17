@@ -9,17 +9,13 @@ class Header extends Component {
     this.props.onIsLoggedInChanged(newStatus);
   };
 
-  render() {
-    // if (
-    //   sessionStorage.getItem("access-tokne") === undefined ||
-    //   this.props.isLoggedIn === false
-    // ) {
-    //   return <Redirect to={{ pathname: "/" }} />;
-    // }
+  onFilterPosts = (updatedPosts) => {
+    this.props.onfilterPostsChange(updatedPosts);
+  };
 
+  render() {
     return (
       <header className="app-header">
-        {console.log(this.props)}
         {sessionStorage.getItem("access-token") &&
         this.props.isLoggedIn === true ? (
           <>
@@ -27,7 +23,11 @@ class Header extends Component {
               <span className="header-logo-text">Image Viewer</span>
             </div>
             <div style={{ float: "right", display: "inline" }}>
-              <SearchBox {...this.props} allPosts={this.props.allPosts} />
+              <SearchBox
+                {...this.props}
+                allPosts={this.props.allPosts}
+                onfilterPostsChange={this.onFilterPosts}
+              />
               <ProfilePic
                 {...this.props}
                 onIsLoggedInChanged={this.onLoginChange}

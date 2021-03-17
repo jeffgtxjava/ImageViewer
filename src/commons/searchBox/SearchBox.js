@@ -7,40 +7,34 @@ export default class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filtered_post: null,
       searchText: "",
     };
   }
 
-  onSearch = (e) => {
-    // console.log("started search");
-    // let key = e.target.value;
-    this.setState(function(state, props) {
-      return { searchText: e.target.value };
-    });
-    console.log(this.state.searchText);
+  onSearch = async (e) => {
+    await this.setState({ searchText: e.target.value });
 
-    // if (this.state.searchText == null || this.state.searchText.trim() === "") {
-    //   this.setState({ filtered_post: this.props.allPosts });
-    // } else {
-    //   let filteredPosts =  this.props.
-    //   .filter((post) => {
-    //     if (post.caption === undefined) {
-    //       console.log(`${post.id}\t caption doesn't exist`);
-    //       return false;
-    //     }
-    //     return post.caption.includes(this.state.searchText);
-    //   });
-    //   this.setState({ filtered_post: filteredRecentPosts });
-    //   console.log("-------", filteredRecentPosts);
-    // }
-    console.log("completed search");
+    if (this.state.searchText.trim() === "" || this.state.searchText === null) {
+      this.setState({ filtered_post: this.props.allPosts });
+      this.props.onfilterPostsChange(this.props.allPosts);
+    } else {
+      // console.log(this.state);
+      let that = this;
+      let filteredPosts = that.props.allPosts.filter(function(post) {
+        if (post.caption === undefined) {
+          return false;
+        }
+        return post.caption
+          .toUpperCase()
+          .includes(that.state.searchText.toUpperCase());
+      });
+      this.props.onfilterPostsChange(filteredPosts);
+    }
   };
 
   componentDidMount() {
     this.setState({ filtered_post: this.props.allPosts });
     // console.log("From mount\n\n", this.state.filtered_post);
-    console.log(this.props);
   }
 
   render() {

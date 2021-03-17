@@ -25,7 +25,6 @@ export default class Posts extends Component {
     return (
       <>
         <div className="posts-card-container" style={{ marginTop: "10px" }}>
-          {console.log("------------------")}
           {(this.props.allPosts || []).map((details, index) => (
             <Card key={details.id} className="post-card">
               {/* {console.log(details)} */}

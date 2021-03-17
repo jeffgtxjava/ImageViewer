@@ -7,9 +7,9 @@ import Posts from "../../commons/posts/Posts";
 export default class Home extends Component {
   constructor() {
     super();
-    this.baseUrl = "https://api.instagram.com/v1/";
     this.state = {
       allPosts: null,
+      filterPosts: null,
     };
   }
 
@@ -21,6 +21,15 @@ export default class Home extends Component {
 
   onLoginChange = (newStatus) => {
     this.setState({ isLoggedIn: newStatus }, () => {});
+  };
+
+  onFilterPosts = async (updatedPosts) => {
+    console.log("before");
+    console.log(this.state);
+    await this.setState({ filterPosts: updatedPosts });
+    console.log("after");
+    console.log(this.state);
+    // this.props.onfilterPostsChange(updatedPosts);
   };
 
   render() {
@@ -36,6 +45,7 @@ export default class Home extends Component {
               allPosts={this.state.allPosts}
               showSearchBox={true}
               onIsLoggedInChanged={this.onLoginChange}
+              onfilterPostsChange={this.onFilterPosts}
               {...this.props}
             />
           </div>
