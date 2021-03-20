@@ -14,7 +14,7 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.state !== undefined) {
+    if (!this.props.filterPosts) {
       this.fetchAllPosts();
     }
   }
@@ -50,7 +50,7 @@ export default class Home extends Component {
             />
           </div>
           <div>
-            <Posts allPosts={this.state.allPosts} {...this.props} />
+            <Posts allPosts={this.state.filterPosts} {...this.props} />
           </div>
         </div>
       );
@@ -69,6 +69,8 @@ export default class Home extends Component {
         // that.setState({
         //   profile_picture: JSON.parse(this.responseText).data.profile_picture,
         // });
+        console.log("from image picking");
+        return JSON.parse(this.responseText).data;
       }
     });
 
@@ -102,8 +104,49 @@ export default class Home extends Component {
 
     xhr.addEventListener("readystatechange", async function() {
       if (this.readyState === 4) {
-        that.setState({ allPosts: JSON.parse(this.responseText).data });
+        that.setState({
+          allPosts: JSON.parse(this.responseText).data,
+          filterPosts: JSON.parse(this.responseText).data,
+        });
       }
     });
+  };
+
+  getPostDetails = (imageData) => {
+    let data = null;
+    let xhr = new XMLHttpRequest();
+    let that = this;
+    let accessToken = window.sessionStorage.getItem("access-token");
+    xhr.addEventListener("readystatechange", function() {
+      if (this.readyState === 4 && this.status === 200) {
+        let parsedData = JSON.parse(this.responseText);
+        let post = {};
+        post.id = parsedData.id;
+        post.caption = imageData.caption || "This is default caption";
+        post.media_url = parsedData.media_url;
+        post.profilePic = that.state.profilePic;
+        post.username = parsedData.username;
+        post.likeIcon = "dispBlock";
+        post.likedIcon = "dispNone";
+        post.likesCount = Math.floor(Math.random() * 10);
+        post.clear = "";
+        post.tags = post.caption.match(/#\S+/g);
+        post.commentContent = [];
+        post.timestamp = new Date(parsedData.timestamp);
+        return post;
+      }
+    });
+    xhr.open(
+      "GET",
+      this.props.baseUrl +
+        imageData.id +
+        "?fields=id,media_type,media_url,username,timestamp&access_token=" +
+        accessToken
+    );
+    // xhr.setRequestHeader("Cache-Control", "no-cache");
+    // xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(data);
+
+    return data;
   };
 }

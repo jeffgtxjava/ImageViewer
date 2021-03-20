@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./Header.css";
 import SearchBox from "../searchBox/SearchBox";
 import ProfilePic from "../profilePic/ProfilePic";
-import { Redirect } from "react-router";
 
 class Header extends Component {
   onLoginChange = (newStatus) => {
