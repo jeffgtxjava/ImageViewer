@@ -22,42 +22,12 @@ export default class Post extends Component {
       postEXIF: {},
     };
   }
-  gatherDetails = async () => {
-    console.log(
-      `this is ${this.props.count} image with ID ${this.props.post.id}`
-    );
 
-    return await this.props.cb(this.props.post);
-  };
-
-  // async componentDidMount() {
-  //   console.log("in mount");
-  //   const postDetails = await this.props.cb(this.props.post);
-
-  //   if (postDetails) {
-  //     console.log("insie sucess");
-  //     this.setState({
-  //       postEXIF: postDetails,
-  //     });
-  //   }
-  //   console.log("out mount");
-  // }
-
-  componentDidMount() {
-    const data = this.props.cb(this.props.post);
-    this.setState({ postEXIF: data }, () => {
-      console.log(this.state);
-    });
+  async componentDidMount() {
+    const data = await this.props.cb(this.props.post);
+    this.setState({ postEXIF: data });
   }
   render() {
-    console.log(
-      `this is ${this.props.count} image with ID ${this.props.post.id}`
-    );
-    // console.log(`${JSON.stringify(this.state.postEXIF)} from state`);
-    // let image_extract = this.props.cb(this.props.post.id);
-    // console.log(image_extract);
-    // console.log("888888888888888" + JSON.stringify(this.state.postEXIF));
-
     return <div>sample</div>;
     // return (
     //   <div className="container">

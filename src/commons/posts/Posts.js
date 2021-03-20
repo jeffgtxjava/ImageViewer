@@ -30,8 +30,8 @@ export default class Posts extends Component {
     return (
       <>
         <div className="posts-card-container" style={{ marginTop: "10px" }}>
-          {console.log(this.props.allPosts)}
-          {(this.props.allPosts || []).map((post, index) => (
+          {console.log(this.props.totalPosts)}
+          {(this.props.totalPosts || []).map((post, index) => (
             <>
               <Post post={post} cb={this.props.cb} count={index} />
             </>
