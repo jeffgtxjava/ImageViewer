@@ -32,32 +32,8 @@ export default class Home extends Component {
     // this.props.onfilterPostsChange(updatedPosts);
   };
 
-  render() {
-    if (this.props.location.state === undefined) {
-      return <Redirect to="/" />;
-    }
-    if (this.props.location.state.loginSuccess === true) {
-      return (
-        <div>
-          <div>
-            <Header
-              isLoggedIn={this.props.location.state.loginSuccess}
-              allPosts={this.state.allPosts}
-              showSearchBox={true}
-              onIsLoggedInChanged={this.onLoginChange}
-              onfilterPostsChange={this.onFilterPosts}
-              {...this.props}
-            />
-          </div>
-          <div>
-            <Posts allPosts={this.state.filterPosts} {...this.props} />
-          </div>
-        </div>
-      );
-    }
-  }
-
   fetchImageDetailsById = (imageId) => {
+    console.log(imageId);
     let data = null;
 
     let xhr = new XMLHttpRequest();
@@ -69,14 +45,16 @@ export default class Home extends Component {
         // that.setState({
         //   profile_picture: JSON.parse(this.responseText).data.profile_picture,
         // });
-        console.log("from image picking");
-        return JSON.parse(this.responseText).data;
+        let parsedData = JSON.parse(this.responseText);
+        // console.log(`8888888888 \n ${JSON.stringify(parsedData)}`);
+        return parsedData;
       }
     });
 
-    let url = `${
-      that.props.baseUrl
-    }${imageId}?fields=id,media_type,media_url,username,timestamp&access_token=${sessionStorage.getItem(
+    let url = `${that.props.baseUrl}${imageId.replace(
+      /['"]+/g,
+      ""
+    )}?fields=id,media_type,media_url,username,timestamp&access_token=${sessionStorage.getItem(
       "access-token"
     )}`;
 
@@ -122,7 +100,7 @@ export default class Home extends Component {
         let parsedData = JSON.parse(this.responseText);
         let post = {};
         post.id = parsedData.id;
-        post.caption = imageData.caption || "This is default caption";
+        // post.caption = imageData.caption || "This is default caption";
         post.media_url = parsedData.media_url;
         post.profilePic = that.state.profilePic;
         post.username = parsedData.username;
@@ -130,7 +108,7 @@ export default class Home extends Component {
         post.likedIcon = "dispNone";
         post.likesCount = Math.floor(Math.random() * 10);
         post.clear = "";
-        post.tags = post.caption.match(/#\S+/g);
+        // post.tags = post.caption.match(/#\S+/g);
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
         return post;
@@ -149,4 +127,32 @@ export default class Home extends Component {
 
     return data;
   };
+  render() {
+    if (this.props.location.state === undefined) {
+      return <Redirect to="/" />;
+    }
+    if (this.props.location.state.loginSuccess === true) {
+      return (
+        <div>
+          <div>
+            <Header
+              isLoggedIn={this.props.location.state.loginSuccess}
+              allPosts={this.state.allPosts}
+              showSearchBox={true}
+              onIsLoggedInChanged={this.onLoginChange}
+              onfilterPostsChange={this.onFilterPosts}
+              {...this.props}
+            />
+          </div>
+          <div>
+            <Posts
+              allPosts={this.state.filterPosts}
+              {...this.props}
+              cb={this.fetchImageDetailsById.bind(this)}
+            />
+          </div>
+        </div>
+      );
+    }
+  }
 }

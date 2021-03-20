@@ -15,6 +15,10 @@ import { Redirect } from "react-router";
 import Post from "../post/Post";
 
 export default class Posts extends Component {
+  onImageTransfer = (imageId) => {
+    console.log(`This is from the parent posts with imageid ${imageId}`);
+    return this.props.cb(imageId);
+  };
   render() {
     if (
       sessionStorage.getItem("access-token") === undefined ||
@@ -27,10 +31,9 @@ export default class Posts extends Component {
       <>
         <div className="posts-card-container" style={{ marginTop: "10px" }}>
           {console.log(this.props.allPosts)}
-          {(this.props.allPosts || []).map((details, index) => (
+          {(this.props.allPosts || []).map((post, index) => (
             <>
-              <Post image_details={details} />
-              {/* <div>simple text</div> */}
+              <Post post={post} cb={this.props.cb} count={index} />
             </>
           ))}
         </div>

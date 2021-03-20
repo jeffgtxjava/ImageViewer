@@ -18,11 +18,17 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 export default class Post extends Component {
   render() {
-    // let image_data = this.props.cb(this.props.image_details.id);
-    // let caption = this.props.image_details.caption;
-    // let image_data = this.props.cb(this.props.image_details.id);
-    console.log("---->");
-    return;
+    console.log(
+      `this is ${this.props.count} image with ID ${this.props.post.id}`
+    );
+    let image_extract = this.props.cb(this.props.post.id);
+    // console.log(
+    //   `this is ${this.props.count} image with ID ${18033115132185422}`
+    // );
+    // let image_extract = this.props.cb(18033115132185422);
+
+    // console.log("---->" + JSON.stringify(image_extract));
+    return <div>{JSON.stringify(image_extract)}</div>;
     // return (
     //   <div className="container">
     //     {this.state.postList.map((post) => (
