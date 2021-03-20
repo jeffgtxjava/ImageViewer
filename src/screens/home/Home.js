@@ -3,6 +3,7 @@ import "./Home.css";
 import Header from "../../commons/header/Header";
 import { Redirect } from "react-router";
 import Posts from "../../commons/posts/Posts";
+import profile_pic from "../../assets/images/profile_pic.png";
 
 export default class Home extends Component {
   constructor() {
@@ -10,6 +11,7 @@ export default class Home extends Component {
     this.state = {
       allPosts: null,
       filterPosts: null,
+      profilePic: profile_pic,
     };
   }
 
@@ -24,18 +26,11 @@ export default class Home extends Component {
   };
 
   onFilterPosts = async (updatedPosts) => {
-    console.log("before");
-    console.log(this.state);
     await this.setState({ filterPosts: updatedPosts });
-    console.log("after");
-    console.log(this.state);
-    // this.props.onfilterPostsChange(updatedPosts);
   };
 
   fetchImageDetailsById = (imageId) => {
-    console.log(imageId);
     let data = null;
-
     let xhr = new XMLHttpRequest();
 
     let that = this;
@@ -45,7 +40,7 @@ export default class Home extends Component {
         // that.setState({
         //   profile_picture: JSON.parse(this.responseText).data.profile_picture,
         // });
-        let parsedData = JSON.parse(this.responseText);
+        const parsedData = JSON.parse(this.responseText);
         // console.log(`8888888888 \n ${JSON.stringify(parsedData)}`);
         return parsedData;
       }
@@ -58,7 +53,7 @@ export default class Home extends Component {
       "access-token"
     )}`;
 
-    xhr.open("GET", url);
+    xhr.open("GET", url, true);
 
     xhr.send(data);
   };
@@ -91,41 +86,116 @@ export default class Home extends Component {
   };
 
   getPostDetails = (imageData) => {
-    let data = null;
-    let xhr = new XMLHttpRequest();
+    // let data = null;
     let that = this;
-    let accessToken = window.sessionStorage.getItem("access-token");
+    let accessToken = sessionStorage.getItem("access-token");
+    const url =
+      this.props.baseUrl +
+      imageData.id +
+      "?fields=id,media_type,media_url,username,timestamp&access_token=" +
+      accessToken;
+    let post = {};
+
+    let xhr = new XMLHttpRequest();
+    // xhr.addEventListener("readystatechange", function() {
+    //   if (this.readyState === 4 && this.status === 200) {
+    //     let parsedData = JSON.parse(this.responseText);
+    //     post.id = parsedData.id;
+    //     post.media_url = parsedData.media_url;
+    //     post.profilePic = that.state.profilePic;
+    //     post.username = parsedData.username;
+    //     post.likeIcon = "dispBlock";
+    //     post.likedIcon = "dispNone";
+    //     post.likesCount = Math.floor(Math.random() * 10);
+    //     post.clear = "";
+    //     if (imageData.caption !== undefined) {
+    //       post.caption = imageData.caption || "This is default caption";
+    //       post.tags = post.caption.match(/#\S+/g);
+    //     }
+    //     post.commentContent = [];
+    //     post.timestamp = new Date(parsedData.timestamp);
+    //     // console.log(post);
+    //     return post;
+    //   }
+    // });
+
+    //
+    xhr.open("get", url, true);
+    xhr.send();
+
+    return new Promise((resolve, reject) => {
+      xhr.onload((response) => {
+        console.log(response);
+        resolve(response);
+      });
+      xhr.onerror(() => {
+        reject(xhr.statusText);
+      });
+    });
+
+    // return new Promise((resolve, reject) => {
+    //   xhr.onload = (response) => {
+    //     let parsedData = JSON.parse(response);
+    //     post.id = parsedData.id;
+    //     post.media_url = parsedData.media_url;
+    //     post.profilePic = that.state.profilePic;
+    //     post.username = parsedData.username;
+    //     post.likeIcon = "dispBlock";
+    //     post.likedIcon = "dispNone";
+    //     post.likesCount = Math.floor(Math.random() * 10);
+    //     post.clear = "";
+    //     if (imageData.caption !== undefined) {
+    //       post.caption = imageData.caption || "This is default caption";
+    //       post.tags = post.caption.match(/#\S+/g);
+    //     }
+    //     post.commentContent = [];
+    //     post.timestamp = new Date(parsedData.timestamp);
+    //     console.log(post);
+    //     resolve(post);
+    //   };
+    //   xhr.onerror = () => reject(xhr.statusText);
+    //   xhr.send();
+    // });
+
+    //
+
+    // xhr.open(
+    //   "GET",
+    //   url,
+    // );
+    // // xhr.setRequestHeader("Cache-Control", "no-cache");
+    // // xhr.setRequestHeader("Content-Type", "application/json");
+    // xhr.send(data);
+
+    // return data;
+  };
+
+  getImageData = (imageData) => {
+    // console.log("Mu Method");
+    // console.log(`-----> ${JSON.stringify(imageData)}`);
+
+    let post = {};
+    let that = this;
+    let imageID = imageData.id.replace(/['"]+/g, "");
+
+    let url = `${
+      that.props.baseUrl
+    }${imageID}?fields=id,media_type,media_url,username,timestamp&access_token=${sessionStorage.getItem(
+      "access-token"
+    )}`;
+
+    const xhr = new XMLHttpRequest();
+
     xhr.addEventListener("readystatechange", function() {
       if (this.readyState === 4 && this.status === 200) {
-        let parsedData = JSON.parse(this.responseText);
-        let post = {};
-        post.id = parsedData.id;
-        // post.caption = imageData.caption || "This is default caption";
-        post.media_url = parsedData.media_url;
-        post.profilePic = that.state.profilePic;
-        post.username = parsedData.username;
-        post.likeIcon = "dispBlock";
-        post.likedIcon = "dispNone";
-        post.likesCount = Math.floor(Math.random() * 10);
-        post.clear = "";
-        // post.tags = post.caption.match(/#\S+/g);
-        post.commentContent = [];
-        post.timestamp = new Date(parsedData.timestamp);
+        post = xhr.responseText;
+        // console.log(post);
         return post;
       }
     });
-    xhr.open(
-      "GET",
-      this.props.baseUrl +
-        imageData.id +
-        "?fields=id,media_type,media_url,username,timestamp&access_token=" +
-        accessToken
-    );
-    // xhr.setRequestHeader("Cache-Control", "no-cache");
-    // xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(data);
 
-    return data;
+    xhr.open("GET", url, false);
+    xhr.send();
   };
   render() {
     if (this.props.location.state === undefined) {
@@ -148,7 +218,7 @@ export default class Home extends Component {
             <Posts
               allPosts={this.state.filterPosts}
               {...this.props}
-              cb={this.fetchImageDetailsById.bind(this)}
+              cb={this.getImageData}
             />
           </div>
         </div>

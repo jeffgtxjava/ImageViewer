@@ -12,23 +12,53 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { Component } from "react";
-import profile_pic from "../../assets/images/profile_pic.png";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 export default class Post extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      postEXIF: {},
+    };
+  }
+  gatherDetails = async () => {
+    console.log(
+      `this is ${this.props.count} image with ID ${this.props.post.id}`
+    );
+
+    return await this.props.cb(this.props.post);
+  };
+
+  // async componentDidMount() {
+  //   console.log("in mount");
+  //   const postDetails = await this.props.cb(this.props.post);
+
+  //   if (postDetails) {
+  //     console.log("insie sucess");
+  //     this.setState({
+  //       postEXIF: postDetails,
+  //     });
+  //   }
+  //   console.log("out mount");
+  // }
+
+  componentDidMount() {
+    const data = this.props.cb(this.props.post);
+    this.setState({ postEXIF: data }, () => {
+      console.log(this.state);
+    });
+  }
   render() {
     console.log(
       `this is ${this.props.count} image with ID ${this.props.post.id}`
     );
-    let image_extract = this.props.cb(this.props.post.id);
-    // console.log(
-    //   `this is ${this.props.count} image with ID ${18033115132185422}`
-    // );
-    // let image_extract = this.props.cb(18033115132185422);
+    // console.log(`${JSON.stringify(this.state.postEXIF)} from state`);
+    // let image_extract = this.props.cb(this.props.post.id);
+    // console.log(image_extract);
+    // console.log("888888888888888" + JSON.stringify(this.state.postEXIF));
 
-    // console.log("---->" + JSON.stringify(image_extract));
-    return <div>{JSON.stringify(image_extract)}</div>;
+    return <div>sample</div>;
     // return (
     //   <div className="container">
     //     {this.state.postList.map((post) => (
