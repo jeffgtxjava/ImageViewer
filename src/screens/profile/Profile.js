@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
+import DialogForm from "../../commons/dialogForm/DialogForm";
 import Header from "../../commons/header/Header";
 import "./Profile.css";
 
@@ -55,14 +56,28 @@ export default class Profile extends Component {
       return (
         <div>
           {allPosts && (
-            <div>
-              <Header
-                isLoggedIn={this.props.isLoggedIn}
-                allPosts={this.state.allPosts}
-                showSearchBox={false}
-                {...this.props}
+            <>
+              <DialogForm
+                showModal={openModal}
+                selectedAction={{
+                  postModal,
+                  editModal,
+                  nameFieldEmpty,
+                }}
+                selectedpostDetails={selectedPostDetails}
+                updateUserNameHandler={this.updateUserNameHandler}
+                userNameSubmitHandler={this.userNameSubmitHandler}
+                closeFormDialogHandler={this.closeFormDialogHandler}
               />
-            </div>
+              <div>
+                <Header
+                  isLoggedIn={this.props.isLoggedIn}
+                  allPosts={this.state.allPosts}
+                  showSearchBox={false}
+                  {...this.props}
+                />
+              </div>
+            </>
           )}
         </div>
       );
