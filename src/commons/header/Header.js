@@ -32,6 +32,7 @@ class Header extends Component {
 
               <ProfilePic
                 {...this.props}
+                showMyAccount={this.props.showSearchBox}
                 onIsLoggedInChanged={this.onLoginChange}
               />
             </div>

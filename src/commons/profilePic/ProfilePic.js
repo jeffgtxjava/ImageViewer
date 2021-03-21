@@ -59,9 +59,12 @@ export default class ProfilePic extends Component {
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             keepMounted
           >
-            <MenuItem onClick={this.onProfileHandler}>
-              <Typography>My Account</Typography>
-            </MenuItem>
+            {this.props.showMyAccount && (
+              <MenuItem onClick={this.onProfileHandler}>
+                <Typography>My Account</Typography>
+              </MenuItem>
+            )}
+
             <hr className="horizontal-line" />
             <MenuItem onClick={this.onLogout}>
               <Typography>Logout</Typography>
