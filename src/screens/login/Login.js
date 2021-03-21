@@ -11,12 +11,13 @@ import {
   InputLabel,
   Typography,
 } from "@material-ui/core";
+import { Redirect } from "react-router";
 const styles = {
   card: {
     padding: "15px",
     position: "relative",
     top: "20px",
-    left: "50%",
+    left: "40%",
     width: "325px",
     transform: "translateX(-50%)",
   },
@@ -26,15 +27,14 @@ const styles = {
 };
 
 export default class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
       usernameRequired: "dispNone",
       passwordRequired: "dispNone",
       incorrectUsernamePassword: "dispNone",
-      loggedIn: sessionStorage.getItem("access-token") == null ? false : true,
     };
   }
 
@@ -72,17 +72,30 @@ export default class Login extends Component {
     ) {
       sessionStorage.setItem(
         "access-token",
-        "IGQVJXeEhFZAlQ2Q3pOLU9ob0VURGtWbmYtRExUdC1QUzZAjT3ZAxN2UxZA3dFajR5dlQzVHBEanJEQjRJdTZAsczlyR3AxTzJrMEpsVS01NWJNeHJGX256R2xiZAFlGTmlYUFhtT1hIS0t3"
+        "IGQVJXM0xidWVNVWxRczZApbzNYNkx5TTdtb2lqUU4zMU16Vjc5VmZAFMXQtaXFnY2E5WXE2SUVzMjFtWENyZAl9VSC14YXAza3Fvd1JnV2FLWVhYTlNZALUVQdFJMRjh2dHd3NkQxdExn"
       );
-      this.setState({ loggedIn: true });
+      this.setState({ incorrectUsernamePassword: "dispNone" });
+      this.props.onIsLoggedInChanged(true);
     } else {
       this.setState({ incorrectUsernamePassword: "dispBlock" });
     }
   };
   render() {
+    if (this.props.isLoggedIn === true) {
+      return (
+        <Redirect to={{ pathname: "/home", state: { loginSuccess: true } }} />
+      );
+    }
+
     return (
       <div>
-        <Header />
+        <Header
+          isLoggedIn={this.props.isLoggedIn}
+          allPosts={this.state.allPosts}
+          showSearchBox={true}
+          onIsLoggedInChanged={this.onLoginChange}
+          {...this.props}
+        />
         <Card style={styles.card}>
           <CardContent>
             <Typography style={styles.title}>LOGIN</Typography>

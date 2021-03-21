@@ -1,0 +1,15 @@
+.dispNone {
+  display: none;
+}
+.dispBlock {
+  display: block;
+}
+
+.container {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  padding: 2% 5% 2% 6%;
+}

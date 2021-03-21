@@ -1,15 +1,23 @@
 .app-header{
     background-color: #263238;
-    height: 50px;
-    line-height: 50px;
+    height: 60px;
+    line-height: 60px;
     margin: 0px;
     padding: 0px;
-}
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #263238; 
+    height: 60px;*/
+} 
 .header-logo-text{
     color: #fff;
     font-size: 18px;
-    text-align: center;
-    float: left;
+    line-height: 60px;;
+    vertical-align: center;
     padding-left: 10px;
-
+}
+.MuiMenu-list {
+    background-color: #c0c0c0;
+    color: red;
 }
