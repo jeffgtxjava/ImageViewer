@@ -5,7 +5,6 @@ import "./Posts.css";
 
 export default class Posts extends Component {
   onImageTransfer = (imageId) => {
-    console.log(`This is from the parent posts with imageid ${imageId}`);
     return this.props.cb(imageId);
   };
   render() {
@@ -18,8 +17,7 @@ export default class Posts extends Component {
 
     return (
       <>
-        <div className="container" style={{ marginTop: "10px" }} key={1234564}>
-          {console.log(this.props.totalPosts)}
+        <div className="container">
           {(this.props.totalPosts || []).map((post, index) => (
             <>
               <Post

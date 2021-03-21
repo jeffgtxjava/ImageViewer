@@ -9,7 +9,7 @@ export default class Controller extends Component {
     super();
     this.state = {
       baseUrl: "https://graph.instagram.com/",
-      isLoggedIn: false,
+      isLoggedIn: sessionStorage.getItem("access-token") ? true : false,
     };
   }
 

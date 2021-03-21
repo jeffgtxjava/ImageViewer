@@ -88,8 +88,6 @@ export default class Home extends Component {
         }
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
-
-        // sessionStorage.setItem(post.id, JSON.stringify(post));
       }
     });
 
@@ -99,10 +97,10 @@ export default class Home extends Component {
   };
 
   render() {
-    if (this.props.location.state === undefined) {
+    if (this.props.isLoggedIn === false) {
       return <Redirect to="/" />;
     }
-    if (this.props.location.state.loginSuccess === true) {
+    if (this.props.isLoggedIn === true) {
       return (
         <div>
           <div>

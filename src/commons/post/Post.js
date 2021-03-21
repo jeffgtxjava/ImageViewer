@@ -6,18 +6,13 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  FormControl,
   IconButton,
-  Input,
-  InputLabel,
   TextField,
   Typography,
   withStyles,
 } from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import React, { Component } from "react";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import { red } from "@material-ui/core/colors";
 
 const styles = (theme) => ({
@@ -29,7 +24,8 @@ const styles = (theme) => ({
     padding: "0 75px 0 15px",
   },
   media: {
-    height: 0,
+    height: "20%",
+    width: "20%",
     padding: "56.25%",
   },
   horizontalLine: {
@@ -81,10 +77,8 @@ class Post extends Component {
   }
 
   async componentDidMount() {
-    console.log("mount started");
     const data = await this.props.cb(this.props.post);
     setTimeout(() => this.setState({ postEXIF: data }), 1000);
-    console.log("mount completed");
   }
 
   getPostDate = (timestamp) => {
@@ -152,203 +146,105 @@ class Post extends Component {
     let { postEXIF: postDetails, commentsList } = this.state;
     let { classes } = this.props;
     if (postDetails === null) {
-      return <div>Loading...</div>;
+      return <div />;
     }
-    console.log(postDetails);
 
     return (
-      <Card className={classes.root} key={"imagePost" + postDetails.id}>
-        <CardHeader
-          className={classes.avatarAlignment}
-          avatar={<Avatar src={postDetails.profilePic} alt="Profile picture" />}
-          title={postDetails.username}
-          subheader={this.getPostDate(postDetails.timestamp)}
-        />
-        <CardMedia className={classes.media} image={postDetails.media_url} />
-        <hr className={classes.horizontalLine} />
-        <CardContent className={classes.content}>
-          <Typography variant="body2" component="p">
-            {postDetails.caption}
-            <span className={classes.hashTags}>{postDetails.hashTags}</span>
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing className={classes.likeAlignment}>
-          <div
-            className={postDetails.likeIcon}
-            onClick={(e) => this.likeClickHandler(postDetails.id)}
+      <>
+        {postDetails.media_type.toLowerCase() === "image" ? (
+          <Card
+            className={classes.root}
+            key={"imagePost" + this.props.containerId}
           >
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-          </div>
-          <div
-            className={postDetails.likedIcon}
-            onClick={(e) => this.likedClickHandler(postDetails.id)}
-          >
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon className={classes.red} />
-            </IconButton>
-          </div>
-          <Typography variant="body2" className={classes.likeStyle}>
-            {postDetails.likesCount > 0 && postDetails.likesCount}
-            {postDetails.likesCount > 1
-              ? " Likes"
-              : postDetails.likesCount > 0 && " Like"}
-          </Typography>
-        </CardActions>
-        {commentsList &&
-          commentsList.length > 0 &&
-          commentsList.map((comment, idx) => (
-            <Typography
-              variant="body2"
-              component="p"
-              key={"comment" + idx}
-              className={classes.commentContainer}
+            <CardHeader
+              className={classes.avatarAlignment}
+              avatar={
+                <Avatar src={postDetails.profilePic} alt="Profile picture" />
+              }
+              title={postDetails.username}
+              subheader={this.getPostDate(postDetails.timestamp)}
+            />
+            <CardMedia
+              className={classes.media}
+              image={postDetails.media_url}
+            />
+            <hr className={classes.horizontalLine} />
+            <CardContent className={classes.content}>
+              <Typography variant="body2" component="p">
+                {postDetails.caption}
+                <span className={classes.hashTags}>{postDetails.hashTags}</span>
+              </Typography>
+              <Typography
+                variant="body2"
+                style={{ color: "blue" }}
+                display="inline"
+              >
+                {postDetails.tags &&
+                  postDetails.tags.map((value, key) => {
+                    return (
+                      <span key={"tag" + key} style={{ marginRight: "5px" }}>
+                        {value}
+                      </span>
+                    );
+                  })}
+              </Typography>
+            </CardContent>
+            <CardActions
+              disablespacing="true"
+              className={classes.likeAlignment}
             >
-              <strong>{postDetails.username}: </strong> {comment}
-            </Typography>
-          ))}
-        <CardActions disableSpacing className={classes.comments}>
-          <TextField
-            id={`addComment_${postDetails.id}`}
-            placeholder="Add a comment"
-            className={classes.textFieldWidth}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) => this.onSubmitComment(e, postDetails.id)}
-          >
-            ADD
-          </Button>
-        </CardActions>
-      </Card>
-
-      /*<Card>
-        <CardHeader
-          avatar={<Avatar src={postDetails.profilePic} alt="pic" />}
-          title={postDetails.username}
-          // subheader="03/10/2018 16:07:24"
-          subheader={this.getPostDate(postDetails.timestamp)}
-        />
-        <CardContent>
-          <CardMedia
-            component={postDetails.media_type.toLowerCase()}
-            className={classes.media}
-            image={postDetails.media_url}
-          />
-          <hr />
-          <Typography variant="body2" color="inherit" component="p">
-            {postDetails.caption}
-          </Typography>
-          <Typography
-            variant="body2"
-            style={{ color: "blue" }}
-            display="inline"
-          >
-            {postDetails.tags &&
-              postDetails.tags.map((value, key) => {
-                return (
-                  <span key={"tag" + key} style={{ marginRight: 5 }}>
-                    {value}
-                  </span>
-                );
-              })}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <div className="likes">
-            <div style={{ display: "inline" }}>
               <div
                 className={postDetails.likeIcon}
-                onClick={() => this.likeClickHandler(postDetails.id)}
+                onClick={(e) => this.likeClickHandler(postDetails.id)}
               >
-                <FavoriteBorderIcon />
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+                </IconButton>
               </div>
-              <div className={postDetails.likedIcon}>
-                <FavoriteIcon
-                  style={{ color: "red" }}
-                  onClick={() => this.likedClickHandler(postDetails.id)}
-                />
+              <div
+                className={postDetails.likedIcon}
+                onClick={(e) => this.likedClickHandler(postDetails.id)}
+              >
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon className={classes.red} />
+                </IconButton>
               </div>
-            </div>
-
-            <span style={{ marginLeft: 10 }}>
-              {postDetails.likesCount < 2 ? (
-                <span> {postDetails.likesCount} like </span>
-              ) : (
-                <span> {postDetails.likesCount} likes </span>
-              )}
-            </span>
-          </div>
-        </CardActions>
-      </Card>
-*/
-      /*
-            <CardActions disableSpacing>
-              <div className="likes">
-                <div
-                  className={postDetails.likeIcon}
-                  onClick={() => this.likeClickHandler(postDetails.id)}
-                >
-                  <FavoriteBorderIcon />
-                </div>
-                <div className={postDetails.likedIcon}>
-                  <FavoriteIcon
-                    style={{ color: "red" }}
-                    onClick={() => this.likedClickHandler(postDetails.id)}
-                  />
-                </div>
-                <span style={{ marginLeft: 10, marginBottom: 8 }}>
-                  {postDetails.likesCount < 2 ? (
-                    <div> {postDetails.likesCount} like </div>
-                  ) : (
-                    <div> {postDetails.likesCount} likes </div>
-                  )}
-                </span>
-              </div>
+              <Typography variant="body2" className={classes.likeStyle}>
+                {postDetails.likesCount > 0 && postDetails.likesCount}
+                {postDetails.likesCount > 1
+                  ? " Likes"
+                  : postDetails.likesCount > 0 && " Like"}
+              </Typography>
             </CardActions>
-            <div className="comments-section">
-              {postDetails.commentContent.map((value, key) => (
-                <CardActions>
-                  <div key={"comment" + key}>
-                    <Typography
-                      variant="body2"
-                      color="inherit"
-                      component="span"
-                      style={{ fontWeight: "bold" }}
-                    >
-                      {postDetails.username}:{" "}
-                    </Typography>
-                    {value}
-                  </div>
-                </CardActions>
+            {commentsList &&
+              commentsList.length > 0 &&
+              commentsList.map((comment, idx) => (
+                <Typography
+                  variant="body2"
+                  component="p"
+                  key={"comment" + idx}
+                  className={classes.commentContainer}
+                >
+                  <strong>{postDetails.username}: </strong> {comment}
+                </Typography>
               ))}
-            </div>
-            <br />
-            <div className="comments">
-              <FormControl className="control">
-                <InputLabel htmlFor="comment">Add a comment</InputLabel>
-                <Input
-                  comment={this.state.comment}
-                  onChange={(e) => this.commentChangeHandler(e, postDetails.id)}
-                  value={postDetails.clear}
-                />
-              </FormControl>
+            <CardActions disablespacing="true" className={classes.comments}>
+              <TextField
+                id={`addComment_${postDetails.id}`}
+                placeholder="Add a comment"
+                className={classes.textFieldWidth}
+              />
               <Button
                 variant="contained"
                 color="primary"
-                style={{ marginLeft: 20 }}
-                onClick={() => this.addCommentHandler(postDetails.id)}
+                onClick={(e) => this.onSubmitComment(e, postDetails.id)}
               >
                 ADD
               </Button>
-            </div>
-          </CardContent>
-        </div>
-      </Card>
-
-      */
+            </CardActions>
+          </Card>
+        ) : null}
+      </>
     );
   }
 }

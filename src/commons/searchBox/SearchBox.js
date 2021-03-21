@@ -18,7 +18,6 @@ export default class SearchBox extends Component {
       this.setState({ filtered_post: this.props.allPosts });
       this.props.onfilterPostsChange(this.props.allPosts);
     } else {
-      // console.log(this.state);
       let that = this;
       let filteredPosts = that.props.allPosts.filter(function(post) {
         if (post.caption === undefined) {
@@ -34,11 +33,9 @@ export default class SearchBox extends Component {
 
   componentDidMount() {
     this.setState({ filtered_post: this.props.allPosts });
-    // console.log("From mount\n\n", this.state.filtered_post);
   }
 
   render() {
-    // console.log(this.props.allPosts);
     return (
       <div className="header-right-flex-container">
         {this.props.showSearchBox ? (
