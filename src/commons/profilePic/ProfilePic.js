@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import profile_pic from "../../assets/images/profile_pic.png";
+import { Redirect } from "react-router";
 
 export default class ProfilePic extends Component {
   constructor(props) {
@@ -36,6 +37,10 @@ export default class ProfilePic extends Component {
     this.props.history.replace("/");
   };
 
+  onProfileHandler = () => {
+    this.props.history.replace("/profile");
+  };
+
   render() {
     return (
       <>
@@ -54,7 +59,7 @@ export default class ProfilePic extends Component {
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             keepMounted
           >
-            <MenuItem>
+            <MenuItem onClick={this.onProfileHandler}>
               <Typography>My Account</Typography>
             </MenuItem>
             <hr className="horizontal-line" />
