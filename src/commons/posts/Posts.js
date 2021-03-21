@@ -1,18 +1,7 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  FormControl,
-  Input,
-  InputLabel,
-} from "@material-ui/core";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import "./Posts.css";
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import Post from "../post/Post";
+import "./Posts.css";
 
 export default class Posts extends Component {
   onImageTransfer = (imageId) => {
@@ -29,11 +18,16 @@ export default class Posts extends Component {
 
     return (
       <>
-        <div className="posts-card-container" style={{ marginTop: "10px" }}>
+        <div className="container" style={{ marginTop: "10px" }} key={1234564}>
           {console.log(this.props.totalPosts)}
           {(this.props.totalPosts || []).map((post, index) => (
             <>
-              <Post post={post} cb={this.props.cb} count={index} />
+              <Post
+                post={post}
+                cb={this.props.cb}
+                count={index}
+                containerId={"post#" + index}
+              />
             </>
           ))}
         </div>

@@ -87,10 +87,12 @@ export default class Home extends Component {
         }
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
+
+        sessionStorage.setItem(post.id, JSON.stringify(post));
       }
     });
 
-    xhr.open("GET", url, false);
+    xhr.open("GET", url, true);
     xhr.send();
     return post;
   };
@@ -112,13 +114,14 @@ export default class Home extends Component {
               {...this.props}
             />
           </div>
-          <div>
+          <>
             <Posts
               totalPosts={this.state.filterPosts}
               {...this.props}
               cb={this.getImageData}
+              key={123}
             />
-          </div>
+          </>
         </div>
       );
     }
