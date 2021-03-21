@@ -74,6 +74,7 @@ export default class Home extends Component {
         let parsedData = JSON.parse(this.responseText);
 
         post.id = parsedData.id;
+        post.media_type = parsedData.media_type;
         post.media_url = parsedData.media_url;
         post.profilePic = that.state.profilePic;
         post.username = parsedData.username;
