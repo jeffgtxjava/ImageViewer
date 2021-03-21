@@ -24,8 +24,7 @@ const styles = (theme) => ({
     padding: "0 75px 0 15px",
   },
   media: {
-    height: "20%",
-    width: "20%",
+    height: 0,
     padding: "56.25%",
   },
   horizontalLine: {
