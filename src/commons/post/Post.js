@@ -10,6 +10,7 @@ import {
   IconButton,
   Input,
   InputLabel,
+  TextField,
   Typography,
   withStyles,
 } from "@material-ui/core";
@@ -21,25 +22,52 @@ import { red } from "@material-ui/core/colors";
 
 const styles = (theme) => ({
   root: {
-    maxWidth: 345,
+    margin: "2%",
+    width: "auto",
+    height: "auto",
+    float: "left",
+    padding: "0 75px 0 15px",
   },
   media: {
     height: 0,
-    width: "100%",
-    paddingTop: "56.25%", // 16:9
+    padding: "56.25%",
   },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
+  horizontalLine: {
+    width: "112%",
   },
-  expandOpen: {
-    transform: "rotate(180deg)",
+  content: {
+    color: "#000000",
+    margin: "-15px 0 0 -15px",
   },
-  avatar: {
-    backgroundColor: red[500],
+  avatarAlignment: {
+    paddingLeft: 0,
+  },
+  likeAlignment: {
+    margin: "-20px 0 0 -20px",
+  },
+  hashTags: {
+    display: "block",
+    color: "#00376b",
+  },
+  textFieldWidth: {
+    margin: "0 0 0 -7px",
+    width: "86%",
+  },
+  likeStyle: {
+    color: "#000000",
+  },
+  red: {
+    color: red[500],
+  },
+  commentContainer: {
+    width: "112%",
+  },
+  comments: {
+    marginTop: 10,
+    width: "107%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 
@@ -48,6 +76,7 @@ class Post extends Component {
     super(props);
     this.state = {
       postEXIF: null,
+      commentsList: [],
     };
   }
 
@@ -104,8 +133,23 @@ class Post extends Component {
     }
   };
 
+  //function to add comments
+  onSubmitComment = (e, id) => {
+    e.stopPropagation();
+    let addedCommentVal = document
+      .getElementById(`addComment_${id}`)
+      .value.trim();
+    let cList = this.state.commentsList;
+    cList.push(addedCommentVal);
+    setTimeout(() => {
+      this.setState({
+        commentsList: cList,
+      });
+    }, 100);
+  };
+
   render() {
-    let postDetails = this.state.postEXIF;
+    let { postEXIF: postDetails, commentsList } = this.state;
     let { classes } = this.props;
     if (postDetails === null) {
       return <div>Loading...</div>;
@@ -113,11 +157,74 @@ class Post extends Component {
     console.log(postDetails);
 
     return (
-      // <div>
-      //   Random Text <span>{postDetails.username}</span>
-      // </div>
+      <Card className={classes.root} key={"imagePost" + postDetails.id}>
+        <CardHeader
+          className={classes.avatarAlignment}
+          avatar={<Avatar src={postDetails.profilePic} alt="Profile picture" />}
+          title={postDetails.username}
+          subheader={this.getPostDate(postDetails.timestamp)}
+        />
+        <CardMedia className={classes.media} image={postDetails.media_url} />
+        <hr className={classes.horizontalLine} />
+        <CardContent className={classes.content}>
+          <Typography variant="body2" component="p">
+            {postDetails.caption}
+            <span className={classes.hashTags}>{postDetails.hashTags}</span>
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing className={classes.likeAlignment}>
+          <div
+            className={postDetails.likeIcon}
+            onClick={(e) => this.likeClickHandler(postDetails.id)}
+          >
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+          </div>
+          <div
+            className={postDetails.likedIcon}
+            onClick={(e) => this.likedClickHandler(postDetails.id)}
+          >
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon className={classes.red} />
+            </IconButton>
+          </div>
+          <Typography variant="body2" className={classes.likeStyle}>
+            {postDetails.likesCount > 0 && postDetails.likesCount}
+            {postDetails.likesCount > 1
+              ? " Likes"
+              : postDetails.likesCount > 0 && " Like"}
+          </Typography>
+        </CardActions>
+        {commentsList &&
+          commentsList.length > 0 &&
+          commentsList.map((comment, idx) => (
+            <Typography
+              variant="body2"
+              component="p"
+              key={"comment" + idx}
+              className={classes.commentContainer}
+            >
+              <strong>{postDetails.username}: </strong> {comment}
+            </Typography>
+          ))}
+        <CardActions disableSpacing className={classes.comments}>
+          <TextField
+            id={`addComment_${postDetails.id}`}
+            placeholder="Add a comment"
+            className={classes.textFieldWidth}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(e) => this.onSubmitComment(e, postDetails.id)}
+          >
+            ADD
+          </Button>
+        </CardActions>
+      </Card>
 
-      <Card>
+      /*<Card>
         <CardHeader
           avatar={<Avatar src={postDetails.profilePic} alt="pic" />}
           title={postDetails.username}
@@ -176,7 +283,7 @@ class Post extends Component {
           </div>
         </CardActions>
       </Card>
-
+*/
       /*
             <CardActions disableSpacing>
               <div className="likes">

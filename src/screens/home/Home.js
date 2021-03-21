@@ -89,7 +89,7 @@ export default class Home extends Component {
         post.commentContent = [];
         post.timestamp = new Date(parsedData.timestamp);
 
-        sessionStorage.setItem(post.id, JSON.stringify(post));
+        // sessionStorage.setItem(post.id, JSON.stringify(post));
       }
     });
 

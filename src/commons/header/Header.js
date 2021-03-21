@@ -22,14 +22,14 @@ class Header extends Component {
               <span className="header-logo-text">Image Viewer</span>
             </div>
             <div style={{ float: "right", display: "inline" }}>
-              {this.props.showSearchBox}? (
-              <SearchBox
-                {...this.props}
-                allPosts={this.props.allPosts}
-                onfilterPostsChange={this.onFilterPosts}
-              />
-              ):(
-              {null})
+              {this.props.showSearchBox && (
+                <SearchBox
+                  {...this.props}
+                  allPosts={this.props.allPosts}
+                  onfilterPostsChange={this.onFilterPosts}
+                />
+              )}
+
               <ProfilePic
                 {...this.props}
                 onIsLoggedInChanged={this.onLoginChange}
