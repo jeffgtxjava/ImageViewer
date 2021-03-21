@@ -11,14 +11,25 @@ class Header extends Component {
   onFilterPosts = (updatedPosts) => {
     this.props.onfilterPostsChange(updatedPosts);
   };
-
+  logoHandler = () => {
+    this.props.history.push("/home");
+  };
   render() {
+    let that = this;
     return (
       <header className="app-header">
         {sessionStorage.getItem("access-token") &&
         this.props.isLoggedIn === true ? (
           <>
-            <div style={{ float: "left", display: "inline" }}>
+            <div
+              className="logo"
+              style={
+                this.props.isProfilePage === true ? { cursor: "pointer" } : null
+              }
+              onClick={
+                this.props.isProfilePage === true ? this.logoHandler : null
+              }
+            >
               <span className="header-logo-text">Image Viewer</span>
             </div>
             <div style={{ float: "right", display: "inline" }}>
@@ -38,7 +49,7 @@ class Header extends Component {
             </div>
           </>
         ) : (
-          <div style={{ float: "left", display: "inline" }}>
+          <div className="logo">
             <span className="header-logo-text">Image Viewer</span>
           </div>
         )}

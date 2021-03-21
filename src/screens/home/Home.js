@@ -105,7 +105,7 @@ export default class Home extends Component {
         <div>
           <div>
             <Header
-              isLoggedIn={this.props.location.state.loginSuccess}
+              isLoggedIn={this.props.isLoggedIn}
               allPosts={this.state.allPosts}
               showSearchBox={true}
               onIsLoggedInChanged={this.onLoginChange}
