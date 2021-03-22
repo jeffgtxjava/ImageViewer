@@ -149,7 +149,7 @@ class Post extends Component {
     }
 
     return (
-      <>
+      <div className="cards-layout ">
         {postDetails.media_type.toLowerCase() === "image" ? (
           <Card
             className={classes.root}
@@ -243,7 +243,7 @@ class Post extends Component {
             </CardActions>
           </Card>
         ) : null}
-      </>
+      </div>
     );
   }
 }

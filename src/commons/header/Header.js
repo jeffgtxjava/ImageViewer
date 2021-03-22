@@ -15,7 +15,6 @@ class Header extends Component {
     this.props.history.push("/home");
   };
   render() {
-    let that = this;
     return (
       <header className="app-header">
         {sessionStorage.getItem("access-token") &&

@@ -25,8 +25,10 @@ export default class Home extends Component {
     this.setState({ isLoggedIn: newStatus }, () => {});
   };
 
-  onFilterPosts = async (updatedPosts) => {
-    await this.setState({ filterPosts: updatedPosts });
+  onFilterPosts = (updatedPosts) => {
+    setTimeout(() => {
+      this.setState({ filterPosts: updatedPosts });
+    }, 500);
   };
 
   fetchAllPosts = () => {
@@ -101,6 +103,7 @@ export default class Home extends Component {
       return <Redirect to="/" />;
     }
     if (this.props.isLoggedIn === true) {
+      console.log(this.state.filterPosts);
       return (
         <div>
           <div>
