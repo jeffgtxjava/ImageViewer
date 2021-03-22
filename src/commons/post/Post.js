@@ -75,15 +75,15 @@ class Post extends Component {
   }
 
   async componentDidMount() {
-    console.log("component did MOUNT");
+    // console.log("component did MOUNT");
 
     const data = await this.props.cb(this.props.post);
     setTimeout(() => this.setState({ postEXIF: data }), 1000);
   }
 
   componentDidUpdate() {
-    console.log("component did UPDATE");
-    console.log(this.props.postEXIF);
+    // console.log("component did UPDATE");
+    // console.log(this.props.postEXIF);
   }
 
   getPostDate = (timestamp) => {
@@ -147,15 +147,15 @@ class Post extends Component {
   };
 
   render() {
-    console.log("is from <<<<< POST");
-    console.log(this.props.postDetails);
+    // console.log("is from <<<<< POST");
+    // console.log(this.props.postDetails);
     let { postEXIF: postDetails, commentsList } = this.state;
     let { classes } = this.props;
     if (postDetails === null) {
       return <div />;
     }
-    console.log("is from >>>>>> POST");
-    console.log(postDetails);
+    // console.log("is from >>>>>> POST");
+    // console.log(postDetails);
     return (
       <div key={"imagePost" + this.props.containerId}>
         {postDetails.media_type.toLowerCase() === "image" ? (

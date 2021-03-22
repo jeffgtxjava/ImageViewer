@@ -26,14 +26,14 @@ export default class Home extends Component {
   };
 
   onFilterPosts = (updatedPosts) => {
-    console.log("######");
-    console.log(this.state.filterPosts);
+    // console.log("######");
+    // console.log(this.state.filterPosts);
     setTimeout(() => {
       this.setState({ filterPosts: updatedPosts });
     }, 500);
 
-    console.log("!!!!");
-    console.log(this.state.filterPosts);
+    // console.log("!!!!");
+    // console.log(this.state.filterPosts);
   };
 
   fetchAllPosts = () => {
