@@ -17,10 +17,9 @@ import { red } from "@material-ui/core/colors";
 
 const styles = (theme) => ({
   root: {
-    margin: "2%",
-    width: "auto",
+    margin: "20px 80px",
+    width: "500px",
     height: "auto",
-    float: "left",
     padding: "0 75px 0 15px",
   },
   media: {
@@ -76,8 +75,15 @@ class Post extends Component {
   }
 
   async componentDidMount() {
+    // console.log("component did MOUNT");
+
     const data = await this.props.cb(this.props.post);
     setTimeout(() => this.setState({ postEXIF: data }), 1000);
+  }
+
+  componentDidUpdate() {
+    // console.log("component did UPDATE");
+    // console.log(this.props.postEXIF);
   }
 
   getPostDate = (timestamp) => {
@@ -129,11 +135,10 @@ class Post extends Component {
   //function to add comments
   onSubmitComment = (e, id) => {
     e.stopPropagation();
-    let addedCommentVal = document
-      .getElementById(`addComment_${id}`)
-      .value.trim();
+    let addedCommentValHandle = document.getElementById(`addComment_${id}`);
     let cList = this.state.commentsList;
-    cList.push(addedCommentVal);
+    cList.push(addedCommentValHandle.value.trim());
+    addedCommentValHandle.value = "";
     setTimeout(() => {
       this.setState({
         commentsList: cList,
@@ -142,19 +147,19 @@ class Post extends Component {
   };
 
   render() {
+    // console.log("is from <<<<< POST");
+    // console.log(this.props.postDetails);
     let { postEXIF: postDetails, commentsList } = this.state;
     let { classes } = this.props;
     if (postDetails === null) {
       return <div />;
     }
-
+    // console.log("is from >>>>>> POST");
+    // console.log(postDetails);
     return (
-      <>
+      <div key={"imagePost" + this.props.containerId}>
         {postDetails.media_type.toLowerCase() === "image" ? (
-          <Card
-            className={classes.root}
-            key={"imagePost" + this.props.containerId}
-          >
+          <Card className={classes.root}>
             <CardHeader
               className={classes.avatarAlignment}
               avatar={
@@ -243,7 +248,7 @@ class Post extends Component {
             </CardActions>
           </Card>
         ) : null}
-      </>
+      </div>
     );
   }
 }

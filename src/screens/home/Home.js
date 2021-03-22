@@ -25,8 +25,15 @@ export default class Home extends Component {
     this.setState({ isLoggedIn: newStatus }, () => {});
   };
 
-  onFilterPosts = async (updatedPosts) => {
-    await this.setState({ filterPosts: updatedPosts });
+  onFilterPosts = (updatedPosts) => {
+    // console.log("######");
+    // console.log(this.state.filterPosts);
+    setTimeout(() => {
+      this.setState({ filterPosts: updatedPosts });
+    }, 500);
+
+    // console.log("!!!!");
+    // console.log(this.state.filterPosts);
   };
 
   fetchAllPosts = () => {
@@ -102,10 +109,10 @@ export default class Home extends Component {
     }
     if (this.props.isLoggedIn === true) {
       return (
-        <div>
+        <>
           <div>
             <Header
-              isLoggedIn={this.props.location.state.loginSuccess}
+              isLoggedIn={this.props.isLoggedIn}
               allPosts={this.state.allPosts}
               showSearchBox={true}
               onIsLoggedInChanged={this.onLoginChange}
@@ -121,7 +128,7 @@ export default class Home extends Component {
               key={123}
             />
           </>
-        </div>
+        </>
       );
     }
   }

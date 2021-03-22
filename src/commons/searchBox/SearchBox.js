@@ -27,6 +27,8 @@ export default class SearchBox extends Component {
           .toUpperCase()
           .includes(that.state.searchText.toUpperCase());
       });
+      // console.log("--->");
+      // console.log(filteredPosts);
       this.props.onfilterPostsChange(filteredPosts);
     }
   };
