@@ -6,10 +6,9 @@
 }
 
 .container {
-  width: auto;
-  height: auto;
   display: flex;
   flex-wrap: wrap;
-  align-content: space-between;
-  padding: 2% 5% 2% 6%;
+  /* justify-content: space-evenly; */
+  align-content: center;
+  margin: 20px 80px;
 }

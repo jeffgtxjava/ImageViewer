@@ -109,7 +109,7 @@ export default class Home extends Component {
     }
     if (this.props.isLoggedIn === true) {
       return (
-        <div>
+        <>
           <div>
             <Header
               isLoggedIn={this.props.isLoggedIn}
@@ -128,7 +128,7 @@ export default class Home extends Component {
               key={123}
             />
           </>
-        </div>
+        </>
       );
     }
   }

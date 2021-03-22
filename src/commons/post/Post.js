@@ -17,10 +17,9 @@ import { red } from "@material-ui/core/colors";
 
 const styles = (theme) => ({
   root: {
-    margin: "2%",
-    width: "auto",
+    margin: "20px 80px",
+    width: "500px",
     height: "auto",
-    float: "left",
     padding: "0 75px 0 15px",
   },
   media: {
@@ -84,6 +83,7 @@ class Post extends Component {
 
   componentDidUpdate() {
     console.log("component did UPDATE");
+    console.log(this.props.postEXIF);
   }
 
   getPostDate = (timestamp) => {
@@ -135,11 +135,10 @@ class Post extends Component {
   //function to add comments
   onSubmitComment = (e, id) => {
     e.stopPropagation();
-    let addedCommentVal = document
-      .getElementById(`addComment_${id}`)
-      .value.trim();
+    let addedCommentValHandle = document.getElementById(`addComment_${id}`);
     let cList = this.state.commentsList;
-    cList.push(addedCommentVal);
+    cList.push(addedCommentValHandle.value.trim());
+    addedCommentValHandle.value = "";
     setTimeout(() => {
       this.setState({
         commentsList: cList,
@@ -158,10 +157,9 @@ class Post extends Component {
     console.log("is from >>>>>> POST");
     console.log(postDetails);
     return (
-      <div className="cards-layout " key={"imagePost" + this.props.containerId}>
+      <div key={"imagePost" + this.props.containerId}>
         {postDetails.media_type.toLowerCase() === "image" ? (
           <Card className={classes.root}>
-            <div>{postDetails.id}</div>
             <CardHeader
               className={classes.avatarAlignment}
               avatar={

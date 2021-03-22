@@ -24,6 +24,10 @@ export default class Posts extends Component {
             <>
               {console.log("is from before POST")}
               {console.log(post)}
+              {/* <>
+                <div>{JSON.stringify(post.caption)}</div>
+                <br/>
+              </> */}
               <Post
                 post={post}
                 cb={this.props.cb}
