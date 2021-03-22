@@ -26,9 +26,14 @@ export default class Home extends Component {
   };
 
   onFilterPosts = (updatedPosts) => {
+    console.log("######");
+    console.log(this.state.filterPosts);
     setTimeout(() => {
       this.setState({ filterPosts: updatedPosts });
     }, 500);
+
+    console.log("!!!!");
+    console.log(this.state.filterPosts);
   };
 
   fetchAllPosts = () => {
@@ -103,7 +108,6 @@ export default class Home extends Component {
       return <Redirect to="/" />;
     }
     if (this.props.isLoggedIn === true) {
-      console.log(this.state.filterPosts);
       return (
         <div>
           <div>

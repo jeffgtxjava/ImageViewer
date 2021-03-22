@@ -15,11 +15,15 @@ export default class Posts extends Component {
       return <Redirect to={{ pathname: "/" }} />;
     }
 
+    console.log("from POST'S");
+    console.log(this.props.totalPosts);
     return (
       <>
         <div className="container">
           {(this.props.totalPosts || []).map((post, index) => (
             <>
+              {console.log("is from before POST")}
+              {console.log(post)}
               <Post
                 post={post}
                 cb={this.props.cb}

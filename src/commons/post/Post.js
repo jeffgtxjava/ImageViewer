@@ -76,8 +76,14 @@ class Post extends Component {
   }
 
   async componentDidMount() {
+    console.log("component did MOUNT");
+
     const data = await this.props.cb(this.props.post);
     setTimeout(() => this.setState({ postEXIF: data }), 1000);
+  }
+
+  componentDidUpdate() {
+    console.log("component did UPDATE");
   }
 
   getPostDate = (timestamp) => {
@@ -142,19 +148,20 @@ class Post extends Component {
   };
 
   render() {
+    console.log("is from <<<<< POST");
+    console.log(this.props.postDetails);
     let { postEXIF: postDetails, commentsList } = this.state;
     let { classes } = this.props;
     if (postDetails === null) {
       return <div />;
     }
-
+    console.log("is from >>>>>> POST");
+    console.log(postDetails);
     return (
-      <div className="cards-layout ">
+      <div className="cards-layout " key={"imagePost" + this.props.containerId}>
         {postDetails.media_type.toLowerCase() === "image" ? (
-          <Card
-            className={classes.root}
-            key={"imagePost" + this.props.containerId}
-          >
+          <Card className={classes.root}>
+            <div>{postDetails.id}</div>
             <CardHeader
               className={classes.avatarAlignment}
               avatar={
